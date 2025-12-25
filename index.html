@@ -6,27 +6,30 @@
     <meta name="screen-orientation" content="landscape">
     <title>Schatten von Dunkelheim</title>
     
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#8b0000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Dunkelheim">
     
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- App Icons -->
     <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
     <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <!-- Game Styles -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Main Menu -->
+    <div id="rotate-device">
+        <div class="rotate-content">
+            <div class="rotate-icon">📱</div>
+            <div class="rotate-arrow">↻</div>
+            <p>Bitte drehe dein Gerät</p>
+            <span>Dieses Spiel funktioniert nur im Querformat</span>
+        </div>
+    </div>
+
     <div id="main-menu">
         <h1 id="game-title">Schatten von Dunkelheim</h1>
         <p id="game-subtitle">Ein dunkles Abenteuer erwartet dich...</p>
@@ -35,7 +38,6 @@
     </div>
 
     <div id="game-container" class="hidden">
-        <!-- Top HUD -->
         <div id="top-hud">
             <div class="stat-bar-container">
                 <span class="stat-label">Leben</span>
@@ -57,7 +59,6 @@
             </div>
         </div>
         
-        <!-- Game World -->
         <div id="game-world">
             <div id="scene-container"></div>
             <div id="location-indicator">
@@ -65,13 +66,10 @@
                 <div id="location-desc">Das vergessene Dorf</div>
             </div>
             <div id="navigation-panel">
-                <!-- Will be populated dynamically -->
-            </div>
+                </div>
         </div>
         
-        <!-- Bottom UI -->
         <div id="bottom-ui">
-            <!-- Quick Bar - Always visible -->
             <div id="quick-bar">
                 <button class="quick-btn" id="toggle-inventory" onclick="Game.toggleInventory()">
                     <span class="quick-btn-icon">🎒</span>
@@ -94,7 +92,6 @@
                     <span>Menü</span>
                 </button>
                 
-                <!-- Equipped items display -->
                 <div id="equipped-display">
                     <div class="equipped-slot-mini" id="mini-weapon" onclick="Game.openCharacter()" title="Waffe">🗡️</div>
                     <div class="equipped-slot-mini" id="mini-shield" onclick="Game.openCharacter()" title="Schild">🛡️</div>
@@ -102,7 +99,6 @@
                 </div>
             </div>
             
-            <!-- Expandable Inventory -->
             <div id="inventory-expandable">
                 <div id="inventory-content">
                     <div id="inventory-panel">
@@ -121,7 +117,6 @@
             </div>
         </div>
         
-        <!-- Dialog Overlay -->
         <div id="dialog-overlay">
             <div id="dialog-box">
                 <div id="dialog-speaker">???</div>
@@ -130,7 +125,6 @@
             </div>
         </div>
         
-        <!-- Combat Overlay -->
         <div id="combat-overlay">
             <div id="combat-arena">
                 <div class="combatant combatant-player">
@@ -157,10 +151,8 @@
             </div>
         </div>
         
-        <!-- Context Menu -->
         <div id="context-menu"></div>
         
-        <!-- Item Tooltip -->
         <div id="item-tooltip">
             <div class="tooltip-name"></div>
             <div class="tooltip-type"></div>
@@ -168,13 +160,10 @@
             <div class="tooltip-desc"></div>
         </div>
         
-        <!-- Notification -->
         <div id="notification"></div>
         
-        <!-- Scene Transition -->
         <div id="scene-transition"></div>
         
-        <!-- Character Screen -->
         <div id="character-overlay">
             <div id="character-header">
                 <div id="character-title">Charakter</div>
@@ -188,14 +177,12 @@
                 <div id="equipment-panel">
                     <div id="equipment-title">Ausrüstung</div>
                     <div id="equipment-grid">
-                        <!-- Helmet -->
                         <div class="equip-row">
                             <div class="equip-slot" data-slot="helmet" onclick="Game.onEquipSlotClick('helmet')">
                                 <span class="equip-slot-icon">🎩</span>
                                 <span class="equip-slot-label">Helm</span>
                             </div>
                         </div>
-                        <!-- Weapon, Armor, Shield -->
                         <div class="equip-row">
                             <div class="equip-slot" data-slot="weapon" onclick="Game.onEquipSlotClick('weapon')">
                                 <span class="equip-slot-icon">🗡️</span>
@@ -210,16 +197,13 @@
                                 <span class="equip-slot-label">Schild</span>
                             </div>
                         </div>
-                        <!-- Character figure -->
                         <div id="char-figure">🧙</div>
-                        <!-- Pants -->
                         <div class="equip-row">
                             <div class="equip-slot" data-slot="pants" onclick="Game.onEquipSlotClick('pants')">
                                 <span class="equip-slot-icon">👖</span>
                                 <span class="equip-slot-label">Hose</span>
                             </div>
                         </div>
-                        <!-- Rings and Amulet -->
                         <div class="equip-row">
                             <div class="equip-slot" data-slot="ring1" onclick="Game.onEquipSlotClick('ring1')">
                                 <span class="equip-slot-icon">💍</span>
@@ -309,7 +293,6 @@
             </div>
         </div>
         
-        <!-- Quest Overlay -->
         <div id="quest-overlay">
             <div id="quest-header">
                 <div id="quest-title">Quests</div>
@@ -319,15 +302,14 @@
         </div>
     </div>
 
-    <!-- Game Scripts - Reihenfolge wichtig! -->
-    <script src="js/game-data.js"></script>
-    <script src="js/game-engine.js"></script>
+    <script src="game-data.js"></script>
+    <script src="game-engine.js"></script>
     
-    <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                // Hier auch den Slash entfernt für maximale Kompatibilität
+                navigator.serviceWorker.register('service-worker.js')
                     .then((registration) => {
                         console.log('ServiceWorker registriert:', registration.scope);
                     })
